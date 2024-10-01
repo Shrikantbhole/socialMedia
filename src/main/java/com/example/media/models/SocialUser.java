@@ -1,12 +1,11 @@
 package com.example.media.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
+@Data
 @Entity
 public class SocialUser
 {
@@ -16,9 +15,15 @@ public class SocialUser
     private Long id;
 
 
-    @OneToOne
-    @JoinColumn(name="social_profile_id")
-    private Profile socialProfile;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+
+
+    private SocialProfile socialProfile;
+    public void setSocialProfile(SocialProfile socialProfile)
+    {
+        socialProfile.setUser(this);
+        this.socialProfile = socialProfile;
+    }
 
     @OneToMany(mappedBy = "socialUser")
     private List<Post> posts = new ArrayList<>();
@@ -30,4 +35,9 @@ public class SocialUser
             inverseJoinColumns = @JoinColumn(name = "group_id")
     )
     private Set<SocialGroup> groups = new HashSet<>();
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
+}
