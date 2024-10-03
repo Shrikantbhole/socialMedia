@@ -30,10 +30,28 @@ public class DataInitializer {
     @Bean
     public CommandLineRunner initializeData() {
         return args -> {
+
+            // Create some social profiles
+            SocialProfile profile1 = new SocialProfile();
+            SocialProfile profile2 = new SocialProfile();
+            SocialProfile profile3 = new SocialProfile();
+
+
+
+            // Save profiles to the database (assuming you have a SocialProfileRepository)
+            //socialProfileRepository.save(profile1);
+            //socialProfileRepository.save(profile2);
+            //socialProfileRepository.save(profile3);
+
             // Create some users
             SocialUser user1 = new SocialUser();
             SocialUser user2 = new SocialUser();
             SocialUser user3 = new SocialUser();
+
+            // Associate profiles with users
+            user1.setSocialProfile(profile1);
+            user2.setSocialProfile(profile2);
+            user3.setSocialProfile(profile3);
 
             // Save users to the database
             userRepository.save(user1);
@@ -82,20 +100,7 @@ public class DataInitializer {
             postRepository.save(post2);
             postRepository.save(post3);
 
-            // Create some social profiles
-            SocialProfile profile1 = new SocialProfile();
-            SocialProfile profile2 = new SocialProfile();
-            SocialProfile profile3 = new SocialProfile();
 
-            // Associate profiles with users
-            profile1.setUser(user1);
-            profile2.setUser(user2);
-            profile3.setUser(user3);
-
-            // Save profiles to the database (assuming you have a SocialProfileRepository)
-            socialProfileRepository.save(profile1);
-            socialProfileRepository.save(profile2);
-            socialProfileRepository.save(profile3);
         };
     }
 }

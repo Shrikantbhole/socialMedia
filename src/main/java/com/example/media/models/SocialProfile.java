@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Data
 public class SocialProfile
@@ -14,14 +16,17 @@ public class SocialProfile
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name="user_id")
+    @OneToOne(mappedBy = "socialProfile")
+
     @JsonIgnore
     private SocialUser user;
     private String description;
 
-    public void setUser(SocialUser user) {
-        this.user = user;
-        this.user.setSocialProfile(this);
+
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(id);
     }
 }

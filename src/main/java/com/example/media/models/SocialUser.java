@@ -15,10 +15,11 @@ public class SocialUser
     private Long id;
 
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-
-
+    @OneToOne( cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name="profile_id")
     private SocialProfile socialProfile;
+
+
     public void setSocialProfile(SocialProfile socialProfile)
     {
         socialProfile.setUser(this);
